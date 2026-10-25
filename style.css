@@ -1,1 +1,115 @@
-f
+:root {
+  --roller-height: 20vh;           /* fallback */
+}
+@supports (height: 1dvh) {
+  :root { --roller-height: 20dvh; } /* phone-friendly, ignores the collapsing address bar */
+}
+
+* {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html, body {
+  margin: 0;
+  background: #111;
+}
+
+body {
+  padding-bottom: var(--roller-height); /* so the end of the sheet isn't hidden behind the roller */
+  touch-action: manipulation;           /* taps fire instantly, no double-tap zoom */
+}
+
+/* The sheet: the image sets its size, overlays are positioned relative to it */
+#sheet {
+  position: relative;
+  width: 100%;
+  max-width: 800px;   /* change this to experiment with sheet size */
+  margin: 0 auto;
+}
+
+#bg {
+  display: block;
+  width: 100%;
+  height: auto;
+  touch-action: pan-y;               /* vertical scrolling only, no zoom gestures */
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;       /* no long-press image menu */
+}
+
+/* Template for every future button/field: position in % only */
+.hotspot {
+  position: absolute;
+  touch-action: manipulation;
+  /* left, top, width, height are set in % per element */
+}
+
+/* Dice roller */
+#roller {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: var(--roller-height);
+  background: #222;
+  border-top: 2px solid #555;
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  touch-action: manipulation;
+  color: #fff;
+  font-family: sans-serif;
+}
+
+#dice-choices {
+  display: flex;
+  gap: 4px;
+  justify-content: center;
+}
+
+.die {
+  flex: 1;
+  padding: 6px 0;
+  background: #333;
+  color: #fff;
+  border: 1px solid #666;
+  border-radius: 6px;
+  font-size: 14px;
+  touch-action: manipulation;
+}
+.die.selected {
+  background: #8a2be2;
+  border-color: #c9a0ff;
+}
+
+#roll-row {
+  flex: 1;
+  display: flex;
+  gap: 8px;
+  min-height: 0;
+}
+
+#roll-btn {
+  flex: 1;
+  background: #8a2be2;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 20px;
+  font-weight: bold;
+  touch-action: manipulation;
+}
+#roll-btn:active { background: #6a1fb5; }
+
+#result {
+  flex: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #111;
+  border-radius: 8px;
+  font-size: 32px;
+  font-weight: bold;
+}
